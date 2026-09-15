@@ -42,28 +42,37 @@ function ScoreSummary({ results }) {
   return (
     <div className="summary">
       <h3 className="summary__title">Summary</h3>
-      {results.map(result => (
-        <ScoreSummaryCard result={result} key={result.category} />
-      ))}
+      <div className="summary__scores-list">
+        {results.map(result => (
+          <ScoreSummaryCard result={result} key={result.category} />
+        ))}
+      </div>
+      {/* <button>continue</button> */}
       <Button>Continue</Button>
     </div>
   );
 }
 
 function Button({ children }) {
-  <button className="btn">Continue</button>;
+  return <button className="btn">{children}</button>;
 }
 
 function ScoreSummaryCard({ result }) {
+  let cardClass;
+  if (result.category === "Reaction") cardClass = "summary-card--red";
+  if (result.category === "Memory") cardClass = "summary-card--yellow";
+  if (result.category === "Verbal") cardClass = "summary-card--green";
+  if (result.category === "Visual") cardClass = "summary-card--blue";
+
   return (
-    <div className="summary-card">
+    <div className={`summary-card ${cardClass}`}>
       <div className="summary-card__title-container">
         <img src={result.icon} alt={result.category} className="summary-card__icon icon" />
         <h4 className="summary-card__category">{result.category}</h4>
       </div>
       <div className="summary-card__score-container">
         <span className="summary-card__score">{result.score}</span>
-        <span>/</span>
+        <span className="summary-card__score-divider">/</span>
         <span className="summary-card__score-total">100</span>
       </div>
     </div>
